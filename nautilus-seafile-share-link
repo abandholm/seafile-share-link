@@ -1,0 +1,13 @@
+#!/bin/bash
+
+for arg
+do
+    OUT=`/home/aba/src/00-own/seafile-share-link/seafile-share-link "$arg" 2>&1`
+    if [ "$?" -eq 0 ]
+    then
+	OUT=$(sed 's#\(http[^  ]*\)#<a href="&">&</a>#' <<< $OUT)
+	zenity --info --title="Share link" --text="$OUT"
+    else
+	zenity --error --title="Share link" --text="$OUT"
+    fi
+done
