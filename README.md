@@ -6,7 +6,7 @@ wrapper that allows you to use it from Nautilus.
 The Nautilus-functionality requires `nautilus-script-manager` or
 `nautilus-scripts-manager`.
 
-*Version:* 0.1
+**Version:** 0.2
 
 ## How do I get set up? ##
 

@@ -108,11 +108,3 @@ curl -i --silent -X PUT -d "type=f&p=$DIR_INSIDE_REPO/$FILE_NAME" \
 	    echo "Error: No Location-header in response from Seafile" >&2
 	    exit
 	)
-
-exit
-
-curl --silent -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' https://seafile.pf-c.dk/api2/shared-links/
-
-echo
-
-
