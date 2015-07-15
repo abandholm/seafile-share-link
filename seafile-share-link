@@ -1,0 +1,118 @@
+#!/bin/bash
+
+
+if [ -d ~/Seafile/.seafile-data ]
+then
+    SEAFILE_CONF=~/Seafile/.seafile-data
+else
+    SEAFILE_CONF=$(locate /*/.seafile-data)
+    if [ -z "$SEAFILE_CONF" ] || [ ! -d "$SEAFILE_CONF" ]
+    then
+	echo "Error: Could not find Seafile configuration" >&2
+	exit 2
+    fi
+fi
+
+function sql_lookup {
+    DB="$1"; SQL="$2"
+    sqlite3 $1 <<-EOF
+	.separator ' '
+	$SQL
+	EOF
+}
+
+if [ -z "$1" -o "$2" ]
+then
+    echo "Usage: `basename $0` filename|dirname" >&2
+    exit 1
+fi
+
+set -e # exit on error
+
+[ -r "$1" ] || [ -d "$1" ] || { echo "Error: file or directory '$1' not found" >&2; exit 1; }
+CANON=`readlink -f "$1"`
+FILE_NAME=`basename "$CANON"`
+DIR_NAME=`dirname "$CANON"`
+
+
+# find repo:
+ACCOUNT_INFO=$(
+    sql_lookup "$SEAFILE_CONF/repo.db" "select repo_id, value from RepoProperty where key='worktree';" |
+	while
+	    read repo folder 
+	do
+	    if [[ "$DIR_NAME" =~ ^$folder ]]
+	    then
+		# Found it!
+		# First lets calculate the "path": The relative path *within* the repo
+		path=$( sed "s#$folder##" <<< $DIR_NAME )
+		# Now find server url and account info from repo
+		url=$(
+		    sql_lookup "$SEAFILE_CONF/repo.db" \
+			"select value from RepoProperty where repo_id='$repo' and key = 'server-url';"
+		)
+		email=$(
+		    sql_lookup "$SEAFILE_CONF/repo.db" \
+			"select value from RepoProperty where repo_id='$repo' and key = 'email';"
+		)
+		# now we can find the access-token in the accounts.db
+		token=$(
+		    sql_lookup "$SEAFILE_CONF/accounts.db" \
+			"select token from accounts where username='$email' and url='$url';"
+		)
+		#---
+		echo $repo $token $url $path
+		break
+	    fi
+	done
+)
+
+if [ -z "$ACCOUNT_INFO" ]
+then
+    echo "Error: Current dir is not synced to Seafile" >&2
+    exit 3
+fi
+
+set -- $ACCOUNT_INFO
+REPO=$1; shift
+TOKEN=$1; shift
+URL=$1; shift
+DIR_INSIDE_REPO="$@"
+
+PING=$(curl --silent https://seafile.pf-c.dk/api2/ping/)
+[ "$PING" != '"pong"' ] && { echo "Could not contact $URL - API-ping failed" >&2; exit 4; }
+
+PING=$(curl --silent -H "Authorization: Token $TOKEN" https://seafile.pf-c.dk/api2/auth/ping/)
+[ "$PING" != '"pong"' ] && { echo "Auth failed -- token seems wrong" >&2; exit 5; }
+
+curl -i --silent -X PUT -d "type=f&p=$DIR_INSIDE_REPO/$FILE_NAME" \
+    -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' \
+    https://seafile.pf-c.dk/api2/repos/$REPO/file/shared-link/ |
+	tr -d '\r' |
+	(
+	    read line
+	    if [ "$line" != 'HTTP/1.1 201 CREATED' ]
+	    then
+		echo "Unexpected HTTP-respononce: '$line'" >&2
+		exit 6
+	    fi
+	    while
+		read name value
+	    do
+		if [ "$name" = 'Location:' ]
+		then
+		    echo "Share-link created at: $value"
+		    exit
+		fi
+	    done
+	    echo "Error: No Location-header in response from Seafile" >&2
+	    exit
+	)
+
+exit
+
+curl --silent -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' https://seafile.pf-c.dk/api2/shared-links/
+
+echo
+
+
