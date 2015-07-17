@@ -8,7 +8,7 @@ The Nautilus-functionality requires `nautilus-script-manager` or
 
 **Version:** 0.2
 
-## How do I get set up? ##
+## How do I set it up? ##
 
 ### Prerequisites ###
 
@@ -32,4 +32,3 @@ or with full path:
 
     $ seafile-share-link /home/aba/Seafile/pfc/AroFotos/portraits/kislas.jpg 
     Share-link created at: https://seafile.pf-c.dk/f/12bb311a30/
-
