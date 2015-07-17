@@ -37,7 +37,7 @@ or with full path:
     Share-link created at: https://seafile.pf-c.dk/f/12bb311a30/
 
 
-### Example - command line ###
+### Example - Nautilus ###
 
 After right-click on "build.log":
 
