@@ -6,9 +6,12 @@ wrapper that allows you to use it from Nautilus.
 The Nautilus-functionality requires `nautilus-script-manager` or
 `nautilus-scripts-manager`.
 
-**Version:** 0.2
+**Version:** 0.3
 
-## How do I get set up? ##
+(I will call it 1.0 when somebody (other than me) reports it working ;-) )
+
+
+## How do I set it up? ##
 
 ### Prerequisites ###
 
@@ -22,7 +25,7 @@ and requires `nautilus-script-manager` or `nautilus-scripts-manager`.
 
     sudo ./install.sh
 
-### Example ###
+### Example - command line ###
 
     $ cd /home/aba/Seafile/pfc/AroFotos/portraits
     $ seafile-share-link kislas.jpg
@@ -33,3 +36,16 @@ or with full path:
     $ seafile-share-link /home/aba/Seafile/pfc/AroFotos/portraits/kislas.jpg 
     Share-link created at: https://seafile.pf-c.dk/f/12bb311a30/
 
+
+### Example - command line ###
+
+After right-click on "build.log":
+
+
+
+
+![In Nautilus](Screenshot-seafile-share-link.png)
+
+
+
+![Result](Screenshot-seafile-share-link-dialog.png)
