@@ -1,16 +1,23 @@
 #!/bin/bash
 
+# This script was created in an afternoon. It is a hack, but may be useful until
+# Nautilus (and command line) support becomes part of the Seafile client itself
+#
+# Anders Bandholm, july 2015
+
 
 if [ -d ~/Seafile/.seafile-data ]
 then
     SEAFILE_CONF=~/Seafile/.seafile-data
-else
+elif [ `which locate` ]
+then
+    # if not in default place, search with locate (if locate is available)
     SEAFILE_CONF=$(locate /*/.seafile-data)
-    if [ -z "$SEAFILE_CONF" ] || [ ! -d "$SEAFILE_CONF" ]
-    then
-	echo "Error: Could not find Seafile configuration" >&2
-	exit 2
-    fi
+fi
+if [ -z "$SEAFILE_CONF" ] || [ ! -d "$SEAFILE_CONF" ]
+then
+    echo "Error: Could not find Seafile configuration" >&2
+    exit 2
 fi
 
 function sql_lookup {
@@ -39,7 +46,7 @@ DIR_NAME=`dirname "$CANON"`
 ACCOUNT_INFO=$(
     sql_lookup "$SEAFILE_CONF/repo.db" "select repo_id, value from RepoProperty where key='worktree';" |
 	while
-	    read repo folder 
+	    read repo folder
 	do
 	    if [[ "$DIR_NAME" =~ ^$folder ]]
 	    then
@@ -79,15 +86,15 @@ TOKEN=$1; shift
 URL=$1; shift
 DIR_INSIDE_REPO="$@"
 
-PING=$(curl --silent https://seafile.pf-c.dk/api2/ping/)
+PING=$(curl --silent "$URL"/api2/ping/)
 [ "$PING" != '"pong"' ] && { echo "Could not contact $URL - API-ping failed" >&2; exit 4; }
 
-PING=$(curl --silent -H "Authorization: Token $TOKEN" https://seafile.pf-c.dk/api2/auth/ping/)
+PING=$(curl --silent -H "Authorization: Token $TOKEN" "$URL"/api2/auth/ping/)
 [ "$PING" != '"pong"' ] && { echo "Auth failed -- token seems wrong" >&2; exit 5; }
 
 curl -i --silent -X PUT -d "type=f&p=$DIR_INSIDE_REPO/$FILE_NAME" \
     -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' \
-    https://seafile.pf-c.dk/api2/repos/$REPO/file/shared-link/ |
+    "$URL"/api2/repos/$REPO/file/shared-link/ |
 	tr -d '\r' |
 	(
 	    read line
