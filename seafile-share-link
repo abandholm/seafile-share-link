@@ -79,15 +79,15 @@ TOKEN=$1; shift
 URL=$1; shift
 DIR_INSIDE_REPO="$@"
 
-PING=$(curl --silent https://seafile.pf-c.dk/api2/ping/)
+PING=$(curl --silent "$URL"/api2/ping/)
 [ "$PING" != '"pong"' ] && { echo "Could not contact $URL - API-ping failed" >&2; exit 4; }
 
-PING=$(curl --silent -H "Authorization: Token $TOKEN" https://seafile.pf-c.dk/api2/auth/ping/)
+PING=$(curl --silent -H "Authorization: Token $TOKEN" "$URL"/api2/auth/ping/)
 [ "$PING" != '"pong"' ] && { echo "Auth failed -- token seems wrong" >&2; exit 5; }
 
 curl -i --silent -X PUT -d "type=f&p=$DIR_INSIDE_REPO/$FILE_NAME" \
     -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' \
-    https://seafile.pf-c.dk/api2/repos/$REPO/file/shared-link/ |
+    "$URL"/api2/repos/$REPO/file/shared-link/ |
 	tr -d '\r' |
 	(
 	    read line
