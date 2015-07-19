@@ -12,7 +12,7 @@ The Nautilus-functionality requires `nautilus-script-manager` or
 [Nautilus script ](http://g-scripts.sourceforge.net/) (You could also
 consult [Ubuntus Howto](https://help.ubuntu.com/community/NautilusScriptsHowto) )
 
-**Version:** 0.3
+**Version:** 0.4
 
 I will call it 1.0 when somebody (other than me) reports it working ;-)
 See contact info at the bottom.
