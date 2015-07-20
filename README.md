@@ -1,4 +1,5 @@
-# README #
+README
+======
 
 A script to create Seafile share-links from the command line plus a
 wrapper that allows you to use it from Nautilus.
@@ -12,13 +13,16 @@ The Nautilus-functionality requires `nautilus-script-manager` or
 [Nautilus script ](http://g-scripts.sourceforge.net/) (You could also
 consult [Ubuntus Howto](https://help.ubuntu.com/community/NautilusScriptsHowto) )
 
-**Version:** 0.4
+**Version:** 0.5
 
 I will call it 1.0 when somebody (other than me) reports it working ;-)
 See contact info at the bottom.
 
+**License:** [Unlicensed](http://unlicense.org/) - do what you want! :-)
 
-## How do I set it up? ##
+
+How do I set it up?
+-------------------
 
 ### Prerequisites ###
 
@@ -60,11 +64,11 @@ After right-click on "build.log":
 
 
 
-![In Nautilus](Screenshot-seafile-share-link.png)
+![In Nautilus](README-pix/Screenshot-seafile-share-link.png)
 
 
 
-![Result](Screenshot-seafile-share-link-dialog.png)
+![Result](README-pix/Screenshot-seafile-share-link-dialog.png)
 
 
 ### Tested on ###
@@ -72,7 +76,8 @@ After right-click on "build.log":
   * Ubuntu 12.04, Seafile client version 4.2.4, Seafile Server version 4.2.2
 
 
-## Contact
+Contact
+-------
 
 Author: Anders Bandholm
 
