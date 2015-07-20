@@ -34,12 +34,16 @@ then
     exit 1
 fi
 
-set -e # exit on error
-
 [ -r "$1" ] || [ -d "$1" ] || { echo "Error: file or directory '$1' not found" >&2; exit 1; }
 CANON=`readlink -f "$1"`
 FILE_NAME=`basename "$CANON"`
 DIR_NAME=`dirname "$CANON"`
+if [ -d "$CANON" ]
+then
+    FILE_OR_DIR='d'
+else
+    FILE_OR_DIR='f'
+fi
 
 
 # find repo:
@@ -92,7 +96,7 @@ PING=$(curl --silent "$URL"/api2/ping/)
 PING=$(curl --silent -H "Authorization: Token $TOKEN" "$URL"/api2/auth/ping/)
 [ "$PING" != '"pong"' ] && { echo "Auth failed -- token seems wrong" >&2; exit 5; }
 
-curl -i --silent -X PUT -d "type=f&p=$DIR_INSIDE_REPO/$FILE_NAME" \
+curl -i --silent -X PUT -d "type=$FILE_OR_DIR&p=$DIR_INSIDE_REPO/$FILE_NAME" \
     -H "Authorization: Token $TOKEN" -H 'Accept: application/json; indent=4' \
     "$URL"/api2/repos/$REPO/file/shared-link/ |
 	tr -d '\r' |
