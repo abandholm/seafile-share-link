@@ -8,10 +8,7 @@ This functionality could probably be done in a better way, and be installed
 along with the Seafile client itself - but until then, you can use these two
 scripts.
 
-**Version:** 0.5
-
-I will call it 1.0 when somebody (other than me) reports it working ;-)
-See contact info at the bottom.
+**Version:** 1.0
 
 **License:** [Unlicensed](http://unlicense.org/) - do what you want! :-)
 
@@ -35,9 +32,10 @@ have 'zenity' installed if you have Nautilus.
 
     ./install.sh
 
-The nautilus-script is installed in `$HOME/.local/share/nautilus/scripts/`. 
-You should run the installer with your user. 
-It will ask for the your password (sudo) to install the `seafile-share-link` script.
+The nautilus-script is installed in `$HOME/.local/share/nautilus/scripts/`,
+so run the installer from your own userid.
+The installer will use `sudo` to install the `seafile-share-link` script.
+
 
 ### Example - command line ###
 
@@ -67,14 +65,17 @@ After right-click on "build.log":
 
 ### Tested on ###
 
-  * Ubuntu 12.04, Seafile client version 4.2.4, Seafile Server version 4.2.2
+  * **Release 0.5:** Ubuntu 12.04, Seafile client version 4.2.4, Seafile Server version 4.2.2
+  * **Release 1.0:** Ubuntu 16.04, Seafile client version 6.1.2, Seafile Server version 6.2.5
 
+The install-path for the Nautilus script changed in Ubuntu 13.10, so if you are an older Ubuntu, 
+you can try the 0.5 version. The scripts are the same -- only the installer has changed.
 
 Contact
 -------
 
-Author: Anders Bandholm
+Author: Anders Bandholm. Thanks to [Karl G](https://github.com/carlos22) for his update so that the installer now works on modern Ubuntus.
 
-Email: 2015 at-sign d7.dk (after 2015: replace 2015 with present year)
+Email: 2018 at-sign d7.dk (after 2018: replace 2018 with present year)
 
 *I liked it when you could just post your email without getting spammed...*
