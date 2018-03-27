@@ -8,11 +8,6 @@ This functionality could probably be done in a better way, and be installed
 along with the Seafile client itself - but until then, you can use these two
 scripts.
 
-The Nautilus-functionality requires `nautilus-script-manager` or
-`nautilus-scripts-manager` as it is intended to be used as a
-[Nautilus script ](http://g-scripts.sourceforge.net/) (You could also
-consult [Ubuntus Howto](https://help.ubuntu.com/community/NautilusScriptsHowto) )
-
 **Version:** 0.5
 
 I will call it 1.0 when somebody (other than me) reports it working ;-)
@@ -32,18 +27,17 @@ The install-script checks for the prerequisites.
 It is used to access the Seafile-config-files. It also needs `curl`
 to access the Seafile REST-API.
 
-`nautilus-seafile-share-link` is meant to be called as a "Nautilus Script",
-and requires `nautilus-script-manager` or `nautilus-scripts-manager`.
+`nautilus-seafile-share-link` is meant to be called as a "Nautilus Script".
 Finally `zenity` is used for the dialog boxes. Chances are good that you
 have 'zenity' installed if you have Nautilus.
 
 ### Installation ###
 
-    sudo ./install.sh
+    ./install.sh
 
-The nautilus-script is installed in `/usr/share/nautilus-scripts` and needs to
-be "activated" for each user using "nautilus-scripts-manager" or "nautilus-script-manager".
-The install-script will inform you about this.
+The nautilus-script is installed in `$HOME/.local/share/nautilus/scripts/`. 
+You should run the installer with your user. 
+It will ask for the your password (sudo) to install the `seafile-share-link` script.
 
 ### Example - command line ###
 
