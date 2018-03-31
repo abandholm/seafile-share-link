@@ -34,7 +34,8 @@ have 'zenity' installed if you have Nautilus.
 
 The nautilus-script is installed in `$HOME/.local/share/nautilus/scripts/`,
 so run the installer from your own userid.
-The installer will use `sudo` to install the `seafile-share-link` script.
+The installer will use `sudo` to install the `seafile-share-link` script,
+into `/usr/local/bin` (or if `$PREFIX` is defined into `$PREFIX/bin`)
 
 
 ### Example - command line ###
@@ -74,7 +75,8 @@ you can try the 0.5 version. The scripts are the same -- only the installer has 
 Contact
 -------
 
-Author: Anders Bandholm. Thanks to [Karl G](https://github.com/carlos22) for his update so that the installer now works on modern Ubuntus.
+Author: Anders Bandholm. Thanks to [carlos22](https://github.com/carlos22) for his update 
+so that the installer now works on modern Ubuntus.
 
 Email: 2018 at-sign d7.dk (after 2018: replace 2018 with present year)
 
