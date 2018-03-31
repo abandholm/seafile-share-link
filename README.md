@@ -72,12 +72,18 @@ After right-click on "build.log":
 The install-path for the Nautilus script changed in Ubuntu 13.10, so if you are an older Ubuntu, 
 you can try the 0.5 version. The scripts are the same -- only the installer has changed.
 
+
+### Contributions
+
+* [carlos22](https://github.com/carlos22) contributed an 
+  [updated install-script](https://github.com/abandholm/seafile-share-link/pull/3)
+  that works on modern Ubuntus.
+
+
 Contact
 -------
 
-Author: Anders Bandholm. Thanks to [carlos22](https://github.com/carlos22) for his update 
-so that the installer now works on modern Ubuntus.
-
-Email: 2018 at-sign d7.dk (after 2018: replace 2018 with present year)
+**Author:** Anders Bandholm.  
+**Email:** 2018 at-sign d7.dk (after 2018: replace 2018 with present year)
 
 *I liked it when you could just post your email without getting spammed...*
