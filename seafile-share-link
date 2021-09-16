@@ -102,7 +102,7 @@ curl -i --silent -X PUT -d "type=$FILE_OR_DIR&p=$DIR_INSIDE_REPO/$FILE_NAME" \
 	tr -d '\r' |
 	(
 	    read line
-	    if [ "$line" != 'HTTP/1.1 201 CREATED' ]
+	    if [ "$line" != 'HTTP/1.1 201 CREATED' && "$line" != 'HTTP/1.1 201 Created' ]
 	    then
 		echo "Unexpected HTTP-respononce: '$line'" >&2
 		exit 6
